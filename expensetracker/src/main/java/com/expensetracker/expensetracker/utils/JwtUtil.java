@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,10 +17,11 @@ import io.jsonwebtoken.security.Keys;
 @Configuration
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcyNjMyNTM1OSwiaWF0IjoxNzI2MzI1MzU5fQ";
+    @Value("${jwt.secret-key}")
+    private String secretkey;
 
     private SecretKey getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+        return Keys.hmacShaKeyFor(secretkey.getBytes());
     }
 
     public String extractUsername(String token) {
