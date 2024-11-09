@@ -3,11 +3,16 @@ package com.expensetracker.expensetracker.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.expensetracker.expensetracker.entity.Expense;
 import com.expensetracker.expensetracker.entity.User;
 import com.expensetracker.expensetracker.services.UserServices;
 
@@ -21,10 +26,24 @@ public class UserController {
     @Autowired
     private UserServices userServices;
 
-    @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) {
-        User createUser = userServices.createUser(user);
-        return new ResponseEntity<>(createUser, HttpStatus.CREATED);
+    @DeleteMapping
+    public ResponseEntity<?> deleteUser() {
+        try {
+            userServices.deleteUser();
+            return new ResponseEntity<>("User is deleted.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateUser(@RequestBody User updatedUser) {
+        try {
+            User existingUser = userServices.updateUser(updatedUser);
+            return new ResponseEntity<>(existingUser, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

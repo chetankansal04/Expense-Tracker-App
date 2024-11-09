@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Table(name= "expense")
+@Table(name = "expenses")
 
 @Entity
 public class Expense {
@@ -23,12 +23,15 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
     @Column(nullable = false)
     private Double amount;
     @Column
     private String description;
-    @Column(name="created_at")
-    private LocalDateTime date;
+    @Column(name = "created_at")
+    private LocalDateTime date = LocalDateTime.now();
     @Column
     private List<String> category = new ArrayList<>();
+
 }
