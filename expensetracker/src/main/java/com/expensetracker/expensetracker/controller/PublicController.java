@@ -54,7 +54,7 @@ public class PublicController {
       if (authentication.isAuthenticated()) {
         String token = this.jwtUtil.generateToken(userDetailsService.loadUserByUsername(loginRequest.getUsername()));
         AuthResponse response = new AuthResponse();
-        response.setUserName(loginRequest.getUsername());
+        response.setUsername(loginRequest.getUsername());
         response.setToken(token);
         Expense expense = new Expense();
         expense.setId(user.getId());

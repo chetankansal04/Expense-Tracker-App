@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,13 +21,13 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/expenses")
+@RequestMapping("public/expenses")
 public class ExpenseController {
 
     @Autowired
     private ExpenseServices expenseServices;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<?> createExpense(@RequestBody Expense expenseEntry) {
         try {
             expenseServices.createExpense(expenseEntry);
@@ -39,7 +37,7 @@ public class ExpenseController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<?> getAllExpenseOfUser() {
         try {
             List<Expense> expense = expenseServices.getAllExpenseOfUser();

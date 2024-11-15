@@ -31,8 +31,8 @@ public class UserServices {
         return userRepository.findById(id);
     }
 
-    public User findByUsername(String userName) {
-        return userRepository.findByUsername(userName);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Transactional
@@ -46,8 +46,9 @@ public class UserServices {
             throw new RuntimeException("User with ID " + user.getId() + " not found.");
         }
     }
+
     @Transactional
-    public User updateUser( User updatedUser) {
+    public User updateUser(User updatedUser) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User user = userRepository.findByUsername(username);
